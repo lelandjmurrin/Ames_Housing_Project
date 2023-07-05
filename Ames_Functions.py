@@ -12,6 +12,7 @@ import requests
 import json
 import time
 import geopy
+import pickle
 from geopy import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 
@@ -125,3 +126,11 @@ def find_min_dist (df_house, df_biz):
                     rsuffix = "_name")
             .reset_index()
             )
+
+def save_state_pkl (k,v, desc):
+    Ames_notebook_state = pickle.load(open("Ames_notebook_state.pkl", "rb"))
+    Ames_notebook_state[k] = (v, desc)
+    pickle.dump(Ames_notebook_state, open("Ames_notebook_state.pkl", "wb"))
+
+def load_state_pkl ():
+    return pickle.load(open("Ames_notebook_state.pkl", "rb"))
