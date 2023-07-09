@@ -73,27 +73,33 @@ def find_important_features (model):
 
 
 def EDA_report (dist_data):
-    display(dist_data.describe())
+    results = {}
+    #display(dist_data.describe())
+    results["describe"] = dist_data.describe()
     num_cols = dist_data.shape[1]
     num_x_cols = num_cols - 1
     y_col = dist_data.columns[-1]
-    print("Field correlation with SalePrice")
-    print(dist_data.corr()[y_col].sort_values(ascending = False))
-    print("-"*30)
-    print()
+    #print("Field correlation with SalePrice")
+    #print(dist_data.corr()[y_col].sort_values(ascending = False))
+    #print("-"*30)
+    #print()
+    results["corr"] = dist_data.corr()[y_col].sort_values(ascending = False)
     X = dist_data.iloc[:, :num_x_cols]
     y = dist_data[y_col]
-    print("Random Forest Feature Importances")
+    #print("Random Forest Feature Importances")
     RFR = RandomForestRegressor()
     RFR.fit(X, y)
-    print(find_important_features(RFR))
-    print("-"*30)
-    print()
+    results["important_features"] = find_important_features(RFR)
+    #print(find_important_features(RFR))
+    #print("-"*30)
+    #print()
     model = smf.ols(formula = y_col + " ~ " + "+".join(dist_data.columns[:-1].tolist()), data = dist_data).fit()
     summary = model.summary()
-    print(summary)
+    results["ols_summary"] = summary
+    #print(summary)
     plt.figure(figsize = (14,14))
     sns.heatmap(dist_data.corr())
+    return results
     
 
 
@@ -121,7 +127,7 @@ def find_min_dist (df_house, df_biz):
             .pivot(columns = "Service", 
                     index = ["SaleID", "Prop_Addr", "SalePrice"], 
                     values = "dist")
-            .join(df_subset.pivot(columns = "Service", index = "SaleID",values = "Name"),
+            .join(df_subset.pivot(columns = "Service", index = "SaleID", values = "Name"),
                     lsuffix = "_dist", 
                     rsuffix = "_name")
             .reset_index()
