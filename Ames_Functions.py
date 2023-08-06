@@ -141,5 +141,8 @@ def save_state_pkl (k,v, desc):
 def load_state_pkl ():
     return pickle.load(open("Ames_notebook_state.pkl", "rb"))
 
-def remove_undeveloped_lots (df):
-    return df.copy().query("YrBuilt <= YrSold_YYYY and YrBuilt != 0 and GLA > 0")
+def remove_undeveloped_lots (df, df_house = None):
+    df_copy = df.copy()
+    if "GLA" not in df:
+        df_copy = df_copy.join(df_house[["GLA", "YrSold_YYYY"]])
+    return df_copy.query("YrBuilt <= YrSold_YYYY and YrBuilt != 0 and GLA > 0")
