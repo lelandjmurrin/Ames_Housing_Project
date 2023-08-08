@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="TotalArea_Gar <= 3892.0\nsamples = 751\nvalue = -1091.18"] ;
+1 [label="OthAc_S <= 137050.0\n620\n-32154.805"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="TotalArea_Gar <= 1682.0\n265\n-83704.998"] ;
+1 -> 2 ;
+3 [label="(...)"] ;
+2 -> 3 ;
+6 [label="(...)"] ;
+2 -> 6 ;
+9 [label="SaleCond <= 2.5\n355\n6326.324"] ;
+1 -> 9 ;
+10 [label="(...)"] ;
+9 -> 10 ;
+13 [label="(...)"] ;
+9 -> 13 ;
+16 [label="OthAc_S <= 316750.0\n131\n145927.506"] ;
+0 -> 16 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+17 [label="OthAc_S <= 244700.0\n94\n106631.62"] ;
+16 -> 17 ;
+18 [label="(...)"] ;
+17 -> 18 ;
+21 [label="(...)"] ;
+17 -> 21 ;
+24 [label="MoSold_MM <= 4.5\n37\n245760.297"] ;
+16 -> 24 ;
+25 [label="(...)"] ;
+24 -> 25 ;
+28 [label="(...)"] ;
+24 -> 28 ;
+}
