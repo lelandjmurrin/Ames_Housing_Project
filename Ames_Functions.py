@@ -117,8 +117,8 @@ def EDA_report (dist_data, show_heatmap = False):
     model = smf.ols(formula = y_col + " ~ " + "+".join(dist_data.columns[:-1].tolist()), data = dist_data).fit()
     summary = model.summary()
     results["ols_summary"] = summary
-    plt.figure(figsize = (14,14))
     if show_heatmap:
+        plt.figure(figsize = (14,14))
         sns.heatmap(dist_data.corr())
     return results
     
@@ -155,6 +155,7 @@ def find_min_dist (df_house, df_biz):
             )
 
 def save_state_pkl (k,v, desc):
+    #TODO: Add code to create pickle file if it doesn't exist yet
     Ames_notebook_state = pickle.load(open("Ames_notebook_state.pkl", "rb"))
     Ames_notebook_state[k] = (v, desc)
     pickle.dump(Ames_notebook_state, open("Ames_notebook_state.pkl", "wb"))
