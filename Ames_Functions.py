@@ -21,7 +21,8 @@ API_KEY = "c65731ef1fc94fd3aba9a53df17c2366"
 #   Below code is from geoapify website
 def get_geoapify (address):
     # Build the API URL
-    url = f"https://api.geoapify.com/v1/geocode/search?text={address}&limit=1&apiKey={API_KEY}"
+    qs = f"text={address}&limit=1&apiKey={API_KEY}"
+    url = "https://api.geoapify.com/v1/geocode/search?" + qs
 
     # Send the API request and get the response
     response = requests.get(url)
@@ -46,10 +47,13 @@ def get_geoapify (address):
 
 #   Driving times/distances lookup API call function
 def OSMR (lat_1, long_1, lat_2, long_2):
+    latlong_str = f"{long_1},{lat_1};{long_2},{lat_2}?overview=false"
+    url = "http://router.project-osrm.org/route/v1/car/" + latlong_str
     # call the OSMR API
-    r = requests.get(f"http://router.project-osrm.org/route/v1/car/{long_1},{lat_1};{long_2},{lat_2}?overview=false""")
+    r = requests.get(url)
     # then you load the response using the json libray
-    # by default you get only one alternative so you access 0-th element of the `routes`
+    # by default you get only one alternative 
+    # so you access 0-th element of the `routes`
     routes = json.loads(r.content)
     route_1 = routes.get("routes")[0]
     return pd.DataFrame(route_1)[["duration", "distance"]].values
